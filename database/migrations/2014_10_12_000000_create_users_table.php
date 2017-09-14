@@ -18,6 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+
+            $table->integerUnsigned(config('multitenant.tenants_collumn', 'tenant_id'));
+            $table->foreign(config('multitenant.tenants_collumn', 'tenant_id'))
+                    ->references(config('multitenant.tenants_reference', 'id'))
+                    ->on(config('multitenant.tenants_table', 'tenants'));
+
             $table->rememberToken();
             $table->timestamps();
         });
